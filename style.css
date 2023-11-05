@@ -6,7 +6,7 @@
   transform-style: preserve-3d;
   perspective: 1000px;
   overflow: hidden;
-  display: none;
+  /* display: none; */
 }
 
 .rainBackground {
@@ -142,5 +142,17 @@
     #222a35 80px
   );
 
+
+}
+
+.frame{
+    height:150px;
+    width:125px;
+      background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border:solid 10px rgb(152, 137, 54);
+  /* z-index:4; */
+  position:absolute;
 
 }
