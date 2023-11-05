@@ -89,6 +89,7 @@ function addCard(url){
    card.css("top", randnumber2 + "px");
 
    $(".rainContainer").append(card);
+   imageurls.push(url)
 
 }
 
@@ -99,8 +100,12 @@ e.preventDefault();
 console.log("clicked card")
 chosenUrl = $(e.target).css("background-image");
 $(e.target).parent().remove()
-$(".rainContainer").css("display", "none");
-createFrame(chosenUrl);
+$(".rainContainer").addClass("rainHide");
+setTimeout(() => {
+  createFrame(chosenUrl);
+  $(".floatingCard").remove()
+
+}, 500);
 
 
 })
@@ -110,21 +115,25 @@ $("body").on("click",".frameFollow",e=>{
   e.preventDefault();
   e.stopPropagation();
   $(e.target).removeClass("frameFollow");
+  $(e.target).addClass("framePinned");
+
 })
 
-// $("body").on("click", ".frame", (e) => {
-//   e.preventDefault();
-//   e.stopPropagation();
-//   if(!$(e.target).hasClass(".frameFollow")){
-//   $(e.target).addClass("frameFollow");
-//   }
-// });
+$("body").on("click", ".framePinned", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  if(!$(e.target).hasClass("frameFollow")){
+  
+  $(e.target).removeClass("framePinned");  
+  $(e.target).addClass("frameFollow");
+  }
+});
 $(".wall").mousemove(e=>{
   e.preventDefault()
   e.stopPropagation()
   var frame = $(".frameFollow");
-  frame.css("top",e.clientY)
-  frame.css("left",e.clientX)
+  frame.css("top",e.clientY-50)
+  frame.css("left",e.clientX-50)
 })
 
 
@@ -135,7 +144,17 @@ function createFrame(){
   $(frame).addClass("frame");
   $(frame).addClass("frameFollow");
   $(frame).css("background-image",chosenUrl);
-  $("body").append(frame)
+  $(".houseContainer").append(frame)
 
 
 }
+
+
+
+$(".window").click(e=>{
+  e.stopPropagation();
+  e.preventDefault();
+  console.log("window")
+  $(".rainContainer").removeClass("rainHide")
+  rainCards();
+})

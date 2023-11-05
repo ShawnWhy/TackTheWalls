@@ -6,6 +6,7 @@
   transform-style: preserve-3d;
   perspective: 1000px;
   overflow: hidden;
+  animation: showRain .5s both;
   /* display: none; */
 }
 
@@ -154,5 +155,54 @@
   border:solid 10px rgb(152, 137, 54);
   /* z-index:4; */
   position:absolute;
+
+}
+
+.rainHide{
+    animation: hideRain .5s both 
+}
+
+@keyframes hideRain {
+    0%{transform:translateX(0%)}
+    100%{transform: translateX(100%);}
+    
+}
+
+@keyframes showRain {
+    100%{transform:translateX(0%)}
+    0%{transform: translateX(100%);}
+    
+}
+
+
+.framePinned{
+    transform: scale(.8);
+      box-shadow: 2px 5px rgba(7, 7, 7, 0.235);
+;
+}
+
+.window{
+    background-color: black;
+    height:200px;
+    width:100px;
+    border: goldenrod 10px solid;
+    position:absolute;
+    top:150px;
+    left:calc(100% - 200px)
+
+}
+.barVert{
+height:10px;
+width:100%;
+top:calc(50% + 5px);
+position:absolute;
+background-color: goldenrod;
+}
+.barHori{
+    height:100%;
+    width:10px;
+    left:calc(50% - 5px);
+    position:absolute;
+    background-color: goldenrod;
 
 }
