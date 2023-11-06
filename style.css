@@ -206,3 +206,70 @@ background-color: goldenrod;
     background-color: goldenrod;
 
 }
+
+.treeContainer{
+    position:absolute;
+    text-align: center;
+    height:500px;
+    width:300px;
+    text-align: center;
+}
+
+.base0{
+    width:50%;
+    height:50px;
+    background-color: #3e2727;
+        margin:auto;
+
+
+}
+
+.base1{
+    margin:auto;
+    width:100%;
+    height:50px;
+    background-image: url("./images/treebottom.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+.base2{
+     width:70%;
+    height:50px;
+    background-image: url("./images/treebottom.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+        margin:auto;
+
+
+}
+.base3{
+     width:50%;
+    height:50px;
+    background-image: url("./images/treebottom.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+        margin:auto;
+
+
+}
+.tip{
+     width:30%;
+    height:50px;
+    background-image: url("./images/tip.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+        margin:auto;
+
+
+}
+.star{
+     width:30%;
+    height:50px;
+    background-image: url("./images/star.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+        margin:auto;
+
+
+}
