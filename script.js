@@ -28,9 +28,14 @@ function rainCards() {
   }
 }
 
+  for (i = 0; i < 20; i++) {
+    createSnow();
+  }
 rainCards();
 
-var rainInterval = setInterval(() => {
+var rainInterval;
+
+rainInterval = setInterval(() => {
   // console.log("raining interval")
   rainCards2();
 }, 30);
@@ -52,6 +57,30 @@ function rainCards2() {
     if (tempTop <= rainBoxHeight) {
       // console.log("eat 1")
       newTop = tempTop + 3;
+    } else {
+      newTop = 0;
+    }
+    $(value).css("top", newTop + "px");
+  });
+}
+
+
+function rainSnow() {
+  var rainBoxHeight = $(".window")[0].getBoundingClientRect().height;
+  // console.log(rainBoxHeight);
+  var cards = $(".snow");
+  // console.log(cards)
+  cards.each(function (index, value) {
+    let tempTop = $(value).css("top");
+    // console.log(tempTop)
+
+    tempTop = parseFloat(tempTop.split("px")[0]);
+    // console.log(tempTop)
+    let newTop = 0;
+
+    if (tempTop <= rainBoxHeight) {
+      // console.log("eat 1")
+      newTop = tempTop + 1;
     } else {
       newTop = 0;
     }
@@ -93,18 +122,23 @@ function addCard(url){
 
 }
 
+var snowInterval;
 
 $("body").on("click",".cardFront", e=>{
 e.stopPropagation();
 e.preventDefault();
 console.log("clicked card")
 chosenUrl = $(e.target).css("background-image");
-$(e.target).parent().remove()
+// $(e.target).parent().remove()
 $(".rainContainer").addClass("rainHide");
 setTimeout(() => {
   createFrame(chosenUrl);
-  $(".floatingCard").remove()
+  $(".floatingCard").remove();
 
+  snowInterval = setInterval(() => {
+    rainSnow();
+  }, 30);
+  clearInterval(rainInterval)
 }, 500);
 
 
@@ -157,4 +191,22 @@ $(".window").click(e=>{
   console.log("window")
   $(".rainContainer").removeClass("rainHide")
   rainCards();
-})
+  clearInterval(snowInterval)
+rainInterval = setInterval(() => {
+  // console.log("raining interval")
+  rainCards2();
+}, 30);})
+
+
+function createSnow(){
+var snow = $("<div>");
+snow.addClass("snow");
+let randomSize = Math.random()*10+5;
+snow.css("left",Math.random()*100+"%");
+snow.css("top", Math.random() * 100 + "%");
+
+snow.css("height",randomSize);
+snow.css("width", randomSize);
+$(".window").prepend(snow);
+
+}

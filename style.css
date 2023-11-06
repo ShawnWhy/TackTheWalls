@@ -188,7 +188,8 @@
     border: goldenrod 10px solid;
     position:absolute;
     top:150px;
-    left:calc(100% - 200px)
+    left:calc(100% - 200px);
+    overflow: hidden;
 
 }
 .barVert{
@@ -210,15 +211,20 @@ background-color: goldenrod;
 .treeContainer{
     position:absolute;
     text-align: center;
-    height:500px;
+    height:400px;
     width:300px;
     text-align: center;
+    top:40%;    
+    left:30%;
+    z-index:5;
+    transform:scale(1.5);
+    pointer-events: none;
 }
 
 .base0{
-    width:50%;
+    width:20%;
     height:50px;
-    background-color: #3e2727;
+    background-color: #694343;
         margin:auto;
 
 
@@ -234,7 +240,7 @@ background-color: goldenrod;
 
 }
 .base2{
-     width:70%;
+     width:80%;
     height:50px;
     background-image: url("./images/treebottom.svg");
     background-repeat: no-repeat;
@@ -244,7 +250,7 @@ background-color: goldenrod;
 
 }
 .base3{
-     width:50%;
+     width:60%;
     height:50px;
     background-image: url("./images/treebottom.svg");
     background-repeat: no-repeat;
@@ -254,13 +260,13 @@ background-color: goldenrod;
 
 }
 .tip{
-     width:30%;
+     width:40%;
     height:50px;
-    background-image: url("./images/tip.svg");
+    background-image: url("./images/treetop.svg");
     background-repeat: no-repeat;
     background-size: contain;
         margin:auto;
-
+background-position:center;
 
 }
 .star{
@@ -269,7 +275,18 @@ background-color: goldenrod;
     background-image: url("./images/star.svg");
     background-repeat: no-repeat;
     background-size: contain;
-        margin:auto;
-
+    margin:auto;
+background-position:center;
 
 }
+
+.snow{
+  background-color: rgba(245, 245, 245, 0.469);
+  border-radius: 50%;
+  position:absolute;
+  z-index: 0;
+}
+
+
+
+
