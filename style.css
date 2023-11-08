@@ -287,6 +287,11 @@ background-position:center;
   z-index: 0;
 }
 
-
+.bulb{
+  position:absolute;
+  height:10px;
+  width:10px;
+  border-radius:50%;
+}
 
 
