@@ -231,7 +231,8 @@ function generatePresents(xPosition){
   for(i=0;i<randNumber;i++){
     let box = $("<div>");
     $(box).addClass("present");
-    
+    $(box).css("left",xPosition);
+    $(box).css("top","100%")    
   }
 
 }
@@ -257,7 +258,7 @@ function ballDrop(ball){
         $(ball).remove()
       }, 200);
 
-      generatePresents()
+      generatePresents($(ball).css(left))
 
      }
   
