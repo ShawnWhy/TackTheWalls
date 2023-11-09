@@ -4,6 +4,20 @@ var imageurls = [
   "http://mreliot.com/wp-content/uploads/2014/12/christmas-tree-in-the-snow-holiday-hd-wallpaper-1920x1080-5401.jpg",
 ];
 
+
+
+function randomColor1() {
+  for (let i = 0; i < 30; i++) {
+    var letters = "0123456789ABCDEF";
+    var color = "#";
+    for (var j = 0; j < 6; j++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+  }
+  return color;
+}
+
+
 var chosenUrl;
 function rainCards() {
   for (i = 0; i < imageurls.length; i++) {
@@ -32,7 +46,7 @@ for (i = 0; i < 20; i++) {
   createSnow();
 }
 rainCards();
-createBulbs();
+createBulbs(20);
 var rainInterval;
 
 rainInterval = setInterval(() => {
@@ -197,8 +211,8 @@ function createSnow() {
   $(".window").prepend(snow);
 }
 
-function createBulbs() {
-  for (i = 0; i < 20; i++) {
+function createBulbs(number) {
+  for (i = 0; i < number; i++) {
     let randHeight = Math.random() * 50 + 15;
     let randLeft = Math.random() * 30 - 15;
     let randColor = Math.floor(Math.random() * 3);
@@ -226,41 +240,156 @@ function createBulbs() {
   }
 }
 
-function generatePresents(xPosition){
-  var randNumber = Math.floor(Math.random*5+1)
-  for(i=0;i<randNumber;i++){
+function generatePresents(xPosition) {
+  console.log("generating presents")
+  console.log(xPosition)
+  var randNumber = Math.floor(Math.random() * 5 + 1);
+  console.log(randNumber)
+  for (i = 0; i < randNumber; i++) {
     let box = $("<div>");
     $(box).addClass("present");
-    $(box).css("left",xPosition);
-    $(box).css("top","100%")    
-  }
+    let randNumber2 = Math.floor(Math.random()*6)
+    let randNumberHeight = Math.random() * 50+20;
 
+    let randNumberWidth = Math.random() * 50+20;
+
+
+    switch (randNumber2) {
+      case 0:
+        $(box).css("animation", "box0 .3s both");
+        break;
+      case 1:
+        $(box).css("animation", "box1 .3s both");
+        break;
+      case 2:
+        $(box).css("animation", "box2 .3s both");
+        break;
+      case 3:
+        $(box).css("animation", "box3 .3s both");
+        break;
+      case 4:
+        $(box).css("animation", "box4 .3s both");
+        break;
+      case 5:
+        $(box).css("animation", "box5 .3s both");
+        break;
+
+      default:
+        $(box).css("animation", "box5 .3s both");
+
+        break;
+    }
+    var treecontainHeight =  $(".treeContainer")[0].getBoundingClientRect().height / 2;
+    var presentHeight = treecontainHeight - randNumberHeight
+
+    $(box).css("left", xPosition);
+    $(box).css("top", presentHeight);
+    $(box).css("height", randNumberHeight+"px")
+    $(box).css("width", randNumberWidth + "px");
+    $(box).css("background-color",randomColor1())
+    var ribbon1 = $("<div>")
+    $(ribbon1).addClass("ribbon1")
+    $(ribbon1).css("left", Math.random()*60+20+"%")
+    $(ribbon1).css("background-color", randomColor1());
+
+    var ribbon2 = $("<div>");
+    $(ribbon2).addClass("ribbon2");
+    $(ribbon2).css("top", Math.random() * 60 + 20 + "%");
+    $(ribbon2).css("background-color", randomColor1());
+
+    $(box).append(ribbon1)
+    $(box).append(ribbon2)
+    $(".treeContainer").append(box)
+
+
+  }
 }
 
-
-$(document).on("click",".bulb",e=>{
+$('body').on("click",".bulb", (e) => {
   e.stopPropagation();
   e.preventDefault();
   $(e.target).addClass("ballDrop");
-})
+});
 
-function ballDrop(ball){
-  let tempHeight = parseFloat($(ball).css("top").split("%"));
-  if(tempHeight<=100){
-    tempHeight++;
-    $(ball).css("top",tempHeight+"%");
-     }
-     else{
-      $(ball).addClass("explode");
-      $(ball).removeClass("ballDrop");
+function ballDropHelper(ball) {
+  var treeBoxHeight =
+    $(".treeContainer")[0].getBoundingClientRect().height / 2;
+
+  let tempHeight = parseFloat($(ball).css("top").split("%")[0]);
+  if (tempHeight <= treeBoxHeight) {
+    tempHeight+=15;
+    // console.log(tempHeight)
+    $(ball).css("top", tempHeight + "px");
+  } else {
+    $(ball).addClass("explode");
+    new Audio("./shatter.mp3").play();
+
+    $(ball).removeClass("ballDrop");
+    setTimeout(() => {
+      $(ball).remove();
+    }, 200);
+
+    generatePresents($(ball).css("left"));
+  }
+}
+
+function ballDrop() {
+  var cards = $(".ballDrop");
+  // console.log(cards)
+  cards.each(function (index, value) {
+    ballDropHelper(value)
+  });
+}
+
+
+var bulbInterval = setInterval(() => {
+  // console.log("raining interval")
+  ballDrop();
+}, 30);
+
+$("body").on("click", ".present", (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  console.log("present click")
+
+  $(e.target).addClass("explode");
       setTimeout(() => {
-
-        $(ball).remove()
+          if ($(e.target).hasClass("present")) {
+            explodePresent(
+              parseInt(e.clientX),
+              parseInt(e.clientY),
+              $(e.target).css("background-color")
+            );
+          }
+        $(e.target).remove();
+        createBulbs(1)
       }, 200);
 
-      generatePresents($(ball).css(left))
+});
 
-     }
-  
+function explodePresent(positionX, positionY, color){
+      new Audio("./pop.mp3").play();
+
+  console.log("explode present")
+  console.log(positionX)
+  console.log(positionY)
+
+for(i=0; i<6; i++){
+  var sparkle = $("<div>");
+  sparkle.addClass("sparkle")
+    sparkle.addClass("explode");
+
+  let randHeight = Math.random()*100-50;
+  let randWidth = Math.random()*100-50;
+  $(sparkle).css("top", positionY+randHeight + "px")
+    $(sparkle).css("left", positionX + randWidth + "px");
+    $(sparkle).css("background-color",color)
+$("body").append(sparkle);
+setTimeout(() => {
+  $(".sparkle").remove()
+}, 200);
+
+
+}
 
 }
